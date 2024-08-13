@@ -9,11 +9,13 @@ import {
    Query,
    ParseBoolPipe,
    ParseIntPipe,
+   HttpCode,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserMapper } from './mapping/user.mapping';
+import { ReadUserDto } from './dto/read-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -27,8 +29,9 @@ export class UsersController {
    }
 
    @Get()
-   findAll() {
-      return this.usersService.findAll();
+   async findAll() {
+      const users = await this.usersService.findAll();
+      return users.map((user) => UserMapper.mapToDto(user));
    }
 
    @Get(':id')
@@ -40,8 +43,9 @@ export class UsersController {
    }
 
    @Patch(':id')
-   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-      return this.usersService.update(id, updateUserDto);
+   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+      const user = await this.usersService.update(id, updateUserDto);
+      return UserMapper.mapToDto(user);
    }
 
    @Delete('remove')
@@ -55,6 +59,7 @@ export class UsersController {
    }
 
    @Delete(':id')
+   @HttpCode(204)
    remove(@Param('id') id: string) {
       return this.usersService.remove(id);
    }

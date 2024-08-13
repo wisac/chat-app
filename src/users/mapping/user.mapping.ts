@@ -7,6 +7,7 @@ export class UserMapper {
    static mapToDto(user: User): ReadUserDto {
       const dto = new ReadUserDto();
       dto.email = user.email;
+      dto.username = user.username;
       dto.firstName = user.firstName;
       dto.lastName = user.lastName;
       dto.picture = user.picture;
