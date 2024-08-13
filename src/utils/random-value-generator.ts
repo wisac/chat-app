@@ -1,3 +1,4 @@
+import { AppConstants } from 'common/constants';
 import { randomInt } from 'crypto';
 import { customAlphabet } from 'nanoid';
 
@@ -11,7 +12,7 @@ export class RandomValueGenerator {
     * @param characterRange The acceptable characters to be used
     * @returns The random and unique string
     */
-   static generateString(length: number, characterRange: string): string {
+   static generateString(length: number, characterRange: string = AppConstants.CHARACTER_RANGE_FOR_ID): string {
       const nanoid = customAlphabet(characterRange, length);
       return nanoid();
    }

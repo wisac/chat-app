@@ -14,8 +14,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UserMapper } from './mapping/user.mapping';
-import { ReadUserDto } from './dto/read-user.dto';
+import { UserMapper } from './mappings/user.mapping';
 
 @Controller('users')
 export class UsersController {
@@ -49,6 +48,7 @@ export class UsersController {
    }
 
    @Delete('remove')
+   @HttpCode(204)
    removeAll(@Query('verifiedEmail', new ParseBoolPipe({
       errorHttpStatusCode: 400,
       optional: true

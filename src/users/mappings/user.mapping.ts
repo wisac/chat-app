@@ -11,6 +11,7 @@ export class UserMapper {
       dto.firstName = user.firstName;
       dto.lastName = user.lastName;
       dto.picture = user.picture;
+      dto.id = user.id;
       dto.totalMessagesSent = user.totalMessagesSent;
 
       return dto;

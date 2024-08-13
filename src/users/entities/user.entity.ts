@@ -1,5 +1,6 @@
+import { Message } from 'src/messages/entities/message.entity';
 import { RandomValueGenerator } from 'src/utils/random-value-generator';
-import { Column, Entity, PrimaryColumn, Unique, VirtualColumn } from 'typeorm';
+import { Column, Entity, OneToMany, OneToOne, PrimaryColumn, Unique, VirtualColumn } from 'typeorm';
 
 @Entity({ }) // table would be generated as user
 export class User {
@@ -7,8 +8,7 @@ export class User {
       unique: true,
    })
    id: string = RandomValueGenerator.generateString(
-      10,
-      '0123456789abcdefghijklmnopqrstuvwxyz',
+      10
    );
 
    @Column({
@@ -45,7 +45,19 @@ export class User {
    online: boolean;
 
    @VirtualColumn({
-      query: () => `SELECT COUNT("id") FROM "message" WHERE "from" = "user.id" `
+      query: () => `SELECT COUNT("id") FROM "message" WHERE "senderId" = "user.id" `
    })
+
+      // sepecify the inverse side of the relationship. i.e the field which the foreign key
+   // @OneToOne(type => Message, message => message.sender)
+      // message: Message
+
+
+   @OneToMany(()=> Message,message => message.sender)
+   sentMessages: Message[]
+
+   @OneToMany(()=> Message, message=> message.receiver)
+      
+      
    totalMessagesSent: number;
 }

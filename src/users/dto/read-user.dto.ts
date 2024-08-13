@@ -7,6 +7,6 @@ export class ReadUserDto extends PartialType<UpdateUserDto>(CreateUserDto) {
    totalMessagesReceived: number
    picture: string
    username: string
-   
+   id: string
 
 }

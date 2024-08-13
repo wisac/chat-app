@@ -4,6 +4,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+// import { ConfigService } from '@nestjs/config';
+
 
 @Injectable()
 export class UsersService {
@@ -11,7 +13,14 @@ export class UsersService {
       @InjectRepository(User)
       private readonly _userRepository: Repository<User>,
       private readonly logger: Logger,
-   ) {}
+      // private readonly configService: ConfigService
+   ) {
+     // const env = configService.get<string>("ENVIRONMENT") 
+      //console.log(env); 
+      // console.log(process.env.NODE_ENV)
+   }
+
+
 
    public async create(createUserDto: CreateUserDto): Promise<User> {
       const user = this._userRepository.create(createUserDto);
@@ -20,7 +29,11 @@ export class UsersService {
    }
 
    async findAll(): Promise<User[] | []> {
-      return this._userRepository.find();
+      return this._userRepository.find({
+         order: {
+            firstName: 'ASC'
+         }
+      });
    }
 
    async findOne(id: string): Promise<User> {
