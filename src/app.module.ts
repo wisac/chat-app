@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import appConfig from 'config/app.config';
 import { MessagesModule } from './messages/messages.module';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
    imports: [
@@ -26,9 +27,10 @@ import { MessagesModule } from './messages/messages.module';
          password: process.env.DATABASE_PASSWORD,
          synchronize: true,
          autoLoadEntities: true,
+         // logging: ["error"]
       }),
    ],
    controllers: [AppController],
-   providers: [AppService],
+   providers: [AppService, ],
 })
 export class AppModule {}

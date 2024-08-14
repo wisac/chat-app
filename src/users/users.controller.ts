@@ -10,6 +10,8 @@ import {
    ParseBoolPipe,
    ParseIntPipe,
    HttpCode,
+   UsePipes,
+   ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -27,12 +29,15 @@ export class UsersController {
       return UserMapper.mapToDto(user);
    }
 
+
    @Get()
    async findAll() {
       const users = await this.usersService.findAll();
+      console.log(users)
       return users.map((user) => UserMapper.mapToDto(user));
    }
 
+   
    @Get(':id')
    async findOne(@Param('id') id: string) {
       console.log(id);
@@ -44,8 +49,10 @@ export class UsersController {
    @Patch(':id')
    async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
       const user = await this.usersService.update(id, updateUserDto);
+
       return UserMapper.mapToDto(user);
    }
+
 
    @Delete('remove')
    @HttpCode(204)

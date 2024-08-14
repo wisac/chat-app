@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 import { User } from 'src/users/entities/user.entity';
 import { Message } from './entities/message.entity';
@@ -13,9 +13,10 @@ export class MessagesController {
       return await this.messagesService.findAll();
    }
 
+   @UsePipes(ValidationPipe)
    @Post()
    async create(@Body() message: CreateMessageDto) {
-      console.log(message)
+      console.log(message);
       return await this.messagesService.create(message);
    }
 }

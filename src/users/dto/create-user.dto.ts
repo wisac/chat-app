@@ -1,4 +1,5 @@
-import { IsEmail, IsString, IsStrongPassword, Length } from 'class-validator';
+import { IsBoolean, IsEmail, IsString, IsStrongPassword, Length } from 'class-validator';
+import { IsNull } from 'typeorm';
 export class CreateUserDto {
    @IsString()
    @Length(2,10)
@@ -15,4 +16,7 @@ export class CreateUserDto {
       minSymbols: 0
    }, { message: 'Enter real password' })
    password: string;
+
+   @IsString()
+   username: string
 }

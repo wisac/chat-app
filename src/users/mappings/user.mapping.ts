@@ -1,4 +1,3 @@
-import { createMapper } from '@automapper/core';
 import { User } from '../entities/user.entity';
 import { ReadUserDto } from '../dto/read-user.dto';
 
@@ -12,8 +11,9 @@ export class UserMapper {
       dto.lastName = user.lastName;
       dto.picture = user.picture;
       dto.id = user.id;
-      dto.totalMessagesSent = user.totalMessagesSent;
+      dto.totalMessagesSent = user.sentMessages.length
 
       return dto;
+
    }
 }
